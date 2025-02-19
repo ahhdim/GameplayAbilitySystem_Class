@@ -14,6 +14,7 @@ AAkitaPlayerState::AAkitaPlayerState()
 	AbilitySystemComponent->SetReplicationMode(EGameplayEffectReplicationMode::Mixed);
 	
 	AttributeSet = CreateDefaultSubobject<UAkitaAttributeSet>("AttributeSet");
+
 }
 
 UAbilitySystemComponent* AAkitaPlayerState::GetAbilitySystemComponent() const

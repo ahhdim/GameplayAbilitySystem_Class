@@ -4,8 +4,11 @@
 #include "Character/AkitaCharacter.h"
 
 #include "AbilitySystemComponent.h"
+#include "AbilitySystem/AkitaAbilitySystemComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
+#include "Player/AkitaPlayerController.h"
 #include "Player/AkitaPlayerState.h"
+#include "UI/HUD/AkitaHUD.h"
 
 AAkitaCharacter::AAkitaCharacter()
 {
@@ -32,14 +35,23 @@ void AAkitaCharacter::OnRep_PlayerState()
 	Super::OnRep_PlayerState();
 
 	// Init ability actor info for the Client
-	InitAbilityActorInfo();	
+	InitAbilityActorInfo();
+	
 }
 
 void AAkitaCharacter::InitAbilityActorInfo()
 {
-	AAkitaPlayerState* AuraPlayerState = GetPlayerState<AAkitaPlayerState>();
-	check(AuraPlayerState);
-	AuraPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AuraPlayerState, this);
-	AbilitySystemComponent = AuraPlayerState->GetAbilitySystemComponent();
-	AttributeSet = AuraPlayerState->GetAttributeSet();
+	AAkitaPlayerState* AkitaPlayerState = GetPlayerState<AAkitaPlayerState>();
+	check(AkitaPlayerState);
+	AkitaPlayerState->GetAbilitySystemComponent()->InitAbilityActorInfo(AkitaPlayerState, this);
+	AbilitySystemComponent = AkitaPlayerState->GetAbilitySystemComponent();
+	AttributeSet = AkitaPlayerState->GetAttributeSet();
+
+	if (AAkitaPlayerController* AkitaPlayerController = Cast<AAkitaPlayerController>(GetController()))
+	{
+		if (AAkitaHUD* AkitaHUD = Cast<AAkitaHUD>(AkitaPlayerController->GetHUD()))
+		{
+			AkitaHUD->InitOverlay(AkitaPlayerController, AkitaPlayerState, AbilitySystemComponent, AttributeSet);
+		}
+	}
 }

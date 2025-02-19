@@ -75,11 +75,13 @@ void AAkitaPlayerController::CursorTrace()
 void AAkitaPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
-	check(AuraContext);
+	check(AkitaContext);
 
 	UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(GetLocalPlayer());
-	check(Subsystem);
-	Subsystem->AddMappingContext(AuraContext, 0);
+	if (Subsystem)
+	{
+		Subsystem->AddMappingContext(AkitaContext, 0);
+	}
 
 	bShowMouseCursor = true;
 	DefaultMouseCursor = EMouseCursor::Default;

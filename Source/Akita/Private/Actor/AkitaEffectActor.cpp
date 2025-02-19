@@ -33,9 +33,10 @@ void AAkitaEffectActor::OnOverlap(UPrimitiveComponent* OverlappedComponent, AAct
 	//TODO: Change this to apply a Gameplay Effect. For now, using const_cast as a hack!
 	if (IAbilitySystemInterface* ASCInterface = Cast<IAbilitySystemInterface>(OtherActor))
 	{
-		const UAkitaAttributeSet* AuraAttributeSet = Cast<UAkitaAttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAkitaAttributeSet::StaticClass()));
-		UAkitaAttributeSet* MutableAuraAttributeSet = const_cast<UAkitaAttributeSet*>(AuraAttributeSet);
-		MutableAuraAttributeSet->SetHealth(AuraAttributeSet->GetHealth() + 25.f);
+		const UAkitaAttributeSet* AkitaAttributeSet = Cast<UAkitaAttributeSet>(ASCInterface->GetAbilitySystemComponent()->GetAttributeSet(UAkitaAttributeSet::StaticClass()));
+		UAkitaAttributeSet* MutableAkitaAttributeSet = const_cast<UAkitaAttributeSet*>(AkitaAttributeSet);
+		MutableAkitaAttributeSet->SetHealth(AkitaAttributeSet->GetHealth() + 25.f);
+		MutableAkitaAttributeSet->SetMana(AkitaAttributeSet->GetMana() - 25);
 		Destroy();
 	}
 }
